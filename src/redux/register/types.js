@@ -1,3 +1,7 @@
-export const ADD_USER = "ADD_USER";
-export const DELETE_USER = "DELETE_USER";
-export const EDIT_USER = "EDIT_USER";
+export const REGISTER_USER = "REGISTER_USER";
+export const FETCH_REGISTER_STARTED = "FETCH_REGISTER_STARTED";
+export const FETCH_REGISTER_SUCCES = "FETCH_REGISTER_SUCCES";
+export const FETCH_REGISTER_ERROR = "FETCH_REGISTER_ERROR";
+
+/* export const DELETE_USER = "DELETE_USER";
+export const EDIT_USER = "EDIT_USER"; */

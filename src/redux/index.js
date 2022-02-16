@@ -1,7 +1,14 @@
-import { createStore, combineReducers } from "redux";
-import { registerReducer } from "./register/reducer";
-const reducers = combineReducers({
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import registerReducer from "./register/reducer";
+const reducer = combineReducers({
   users: registerReducer,
 });
 
-export default createStore(reducers);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+
+export default createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(thunk))
+  //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);

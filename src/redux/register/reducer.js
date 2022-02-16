@@ -1,12 +1,27 @@
-import { ADD_USER, DELETE_USER } from "./types";
+import * as TYPES from "./types";
 
 const initialSatate = [];
-export function registerReducer(state = initialSatate, action) {
-  switch (action.TYPE) {
-    case ADD_USER:
-      console.log("Add User");
-    case DELETE_USER:
-      console.log("delete user");
+export default function registerReducer(state = initialSatate, action) {
+  switch (action.type) {
+    case TYPES.REGISTER_USER:
+      return [...state, action.payload];
+
+    case TYPES.FETCH_REGISTER_SUCCES:
+      return {
+        ...state,
+        user: action.payload,
+        haserror: false,
+        errorMessage: "",
+      };
+
+    case TYPES.FETCH_REGISTER_ERROR:
+      return {
+        ...state,
+        res: "",
+        haserror: true,
+        errorMessage: action.payload.message,
+      };
+
     default:
       return state;
   }
