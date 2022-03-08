@@ -1,99 +1,164 @@
-import { registerUserActionCreator } from "../redux/register/actionCreator";
+import { thunkUserRegister } from "../redux/users/thunk";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-const INITIAL_STATE = {
-  name: "",
-  lastname: "",
-  email: "",
-  password: "",
-};
+import { Formik } from "formik";
+import * as yup from "yup";
+import { Link } from "react-router-dom";
+import registerImg from "../images/register.png";
+
 export default function UserRegister() {
-  const [user, setUser] = useState(INITIAL_STATE);
+  const schema = yup.object().shape({
+    name: yup.string().required("Name is required"),
+    lastName: yup.string().required("Last Name is required"),
+    email: yup.string().email().required(),
+    password: yup
+      .string()
+      .required("Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/,
+        "Must Contain min 6 Characters, One Uppercase, One Lowercase and One Number"
+      ),
+    confirmPassword: yup
+      .string()
+      .required()
+      .oneOf([yup.ref("password"), null], "Passwords must match")
+
+      .required("Confirm password is required"),
+  });
+
   const dispatch = useDispatch();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const { name, lastname, email, password } = user;
-    dispatch(
-      registerUserActionCreator({
-        name,
-        lastname,
-        email,
-        password,
-      })
-    );
-    setUser(INITIAL_STATE);
-  };
-
-  const handleChange = ({ target: { name, value } }) => {
-    setUser((user) => ({ ...user, [name]: value }));
-  };
-  const { name, lastname, email, password } = user;
-  console.log(user);
   return (
-    <>
-      <div className="container">
-        <Form onSubmit={handleSubmit}>
-          <h1>Register User </h1>
-          <Form.Group className="mb-3" controlId="name">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              name="name"
-              placeholder="name"
-              value={name}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="lastname">
-            <Form.Label>Lastname</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              name="lastname"
-              placeholder="lastname"
-              value={lastname}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              placeholder="name@example.com"
-              value={email}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="password">Password</Form.Label>
-            <Form.Control
-              type="password"
-              name="password"
-              value={password}
-              onChange={handleChange}
-              id="password"
-              aria-describedby="passwordHelpBlock"
-            />
-            <Form.Text id="passwordHelpBlock" muted>
-              Your password must be 8-20 characters long, contain letters and
-              numbers, and must not contain spaces, special characters, or
-              emoji.
-            </Form.Text>
-          </Form.Group>
+    <Formik
+      validationSchema={schema}
+      onSubmit={({ confirmPassword, ...values }, { resetForm }) => {
+        console.log(values);
+        console.log("1.dispatch thunk in register component");
 
-          <div className="d-grid gap-2">
-            <Button variant="primary" type="submit" size="lg">
-              Register
-            </Button>
-          </div>
-        </Form>
-      </div>
-    </>
+        dispatch(thunkUserRegister(values));
+        //resetForm();
+      }}
+      initialValues={{
+        name: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      }}
+    >
+      {({
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        isSubmitting,
+        values,
+        touched,
+        isValid,
+        errors,
+      }) => (
+        <div className="container">
+          <Form noValidate onSubmit={handleSubmit}>
+            <h1 className="text-center">Register User </h1>
+            <img className="img-fluid w-100" src={registerImg} alt="register" />
+
+            <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                isInvalid={!!errors.name}
+                placeholder="Name"
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.name}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="lastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastName"
+                value={values.lastName}
+                onChange={handleChange}
+                isInvalid={!!errors.lastName}
+                placeholder="Last name"
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.lastName}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                isInvalid={!!errors.email}
+                placeholder="example@example.com"
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.email}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                value={values.password}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                isInvalid={!!errors.password}
+                placeholder="password"
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.password}
+              </Form.Control.Feedback>
+              <Form.Text id="passwordHelpBlock" muted>
+                Your password must Contain min 6 Characters, One Uppercase, One
+                Lowercase and One Number".
+              </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="confirmPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="confirmPassword"
+                value={values.confirmPassword}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                isInvalid={!!errors.confirmPassword}
+                placeholder="Confirm password"
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.confirmPassword}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <div className="d-grid gap-2">
+              <Button
+                variant="primary"
+                type="submit"
+                size="lg"
+                //disabled={isSubmitting}
+              >
+                Register
+              </Button>
+            </div>
+            <div className="text-center">
+              <Link to="/login">Already have an account?</Link>
+            </div>
+          </Form>
+        </div>
+      )}
+    </Formik>
   );
 }
