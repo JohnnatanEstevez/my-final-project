@@ -8,7 +8,7 @@ export default function UserLogin() {
     <div>
       <h1 className="text-center">Login</h1>
       <div className="text-center">
-        <Link to="/register">Already have an account?</Link>
+        <Link to="/register">Don't have an account yet?</Link>
       </div>
     </div>
   );
