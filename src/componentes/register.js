@@ -11,7 +11,7 @@ import registerImg from "../images/register.png";
 export default function UserRegister() {
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
-    lastName: yup.string().required("Last Name is required"),
+    lastname: yup.string().required("Last Name is required"),
     email: yup.string().email().required(),
     password: yup
       .string()
@@ -42,7 +42,7 @@ export default function UserRegister() {
       }}
       initialValues={{
         name: "",
-        lastName: "",
+        lastname: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -61,8 +61,8 @@ export default function UserRegister() {
         <div className="container">
           <Form noValidate onSubmit={handleSubmit}>
             <h1 className="text-center">Register User </h1>
-            <img className="img-fluid w-100" src={registerImg} alt="register" />
-
+            {/*             <img className="img-fluid w-100" src={registerImg} alt="register" />
+             */}
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -78,18 +78,18 @@ export default function UserRegister() {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="lastName">
+            <Form.Group className="mb-3" controlId="lastname">
               <Form.Label>Last Name</Form.Label>
               <Form.Control
                 type="text"
-                name="lastName"
-                value={values.lastName}
+                name="lastname"
+                value={values.lastname}
                 onChange={handleChange}
-                isInvalid={!!errors.lastName}
+                isInvalid={!!errors.lastname}
                 placeholder="Last name"
               />
               <Form.Control.Feedback type="invalid">
-                {errors.lastName}
+                {errors.lastname}
               </Form.Control.Feedback>
             </Form.Group>
 

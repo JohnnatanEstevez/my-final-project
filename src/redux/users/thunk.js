@@ -1,6 +1,5 @@
 import { postRegister } from "../../services/registerService";
 import { userRegisterSuccess, userRegisterError } from "./actionCreator";
-
 export const thunkUserRegister = (values) => {
   console.log("2.thunk");
   return (dispatch) => {
