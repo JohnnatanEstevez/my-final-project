@@ -6,9 +6,8 @@ import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
-import registerImg from "../images/register.png";
 
-export default function UserRegister() {
+export default function Register() {
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
     lastname: yup.string().required("Last Name is required"),
@@ -24,7 +23,6 @@ export default function UserRegister() {
       .string()
       .required()
       .oneOf([yup.ref("password"), null], "Passwords must match")
-
       .required("Confirm password is required"),
   });
 
@@ -35,10 +33,8 @@ export default function UserRegister() {
       validationSchema={schema}
       onSubmit={({ confirmPassword, ...values }, { resetForm }) => {
         console.log(values);
-        console.log("1.dispatch thunk in register component");
-
         dispatch(thunkUserRegister(values));
-        //resetForm();
+        resetForm();
       }}
       initialValues={{
         name: "",
@@ -61,8 +57,6 @@ export default function UserRegister() {
         <div className="container">
           <Form noValidate onSubmit={handleSubmit}>
             <h1 className="text-center">Register User </h1>
-            {/*             <img className="img-fluid w-100" src={registerImg} alt="register" />
-             */}
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -148,7 +142,7 @@ export default function UserRegister() {
                 variant="primary"
                 type="submit"
                 size="lg"
-                //disabled={isSubmitting}
+                disabled={isSubmitting}
               >
                 Register
               </Button>

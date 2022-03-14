@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export default function UserLogin() {
+export default function Login() {
   return (
     <div>
       <h1 className="text-center">Login</h1>
