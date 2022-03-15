@@ -1,5 +1,5 @@
 import * as yup from "yup";
-export const schema = {
+export const basicAuthSchema = {
   email: yup.string().email().required(),
   password: yup
     .string()
@@ -10,8 +10,8 @@ export const schema = {
     ),
 };
 
-export const schemaRegister = yup.object().shape({
-  ...schema,
+export const registerSchema = yup.object().shape({
+  ...basicAuthSchema,
   name: yup.string().required("Name is required"),
   lastname: yup.string().required("Last Name is required"),
   confirmPassword: yup
@@ -25,6 +25,6 @@ export const schemaRegister = yup.object().shape({
     .required("Confirm password is required"),
 });
 
-export const schemaLogin = yup.object().shape({
-  ...schema,
+export const loginSchema = yup.object().shape({
+  ...basicAuthSchema,
 });

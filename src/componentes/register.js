@@ -5,14 +5,14 @@ import { Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
-import { schemaRegister } from "../schemas/schema";
+import { registerSchema } from "../schemas/schema";
 
 export default function Register() {
   const dispatch = useDispatch();
 
   return (
     <Formik
-      validationSchema={schemaRegister}
+      validationSchema={registerSchema}
       onSubmit={({ confirmPassword, ...values }, { resetForm }) => {
         console.log(values);
         dispatch(thunkUserRegister(values));
