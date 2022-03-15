@@ -14,7 +14,6 @@ export default function Register() {
     <Formik
       validationSchema={registerSchema}
       onSubmit={({ confirmPassword, ...values }, { resetForm }) => {
-        console.log(values);
         dispatch(thunkUserRegister(values));
         resetForm();
       }}
