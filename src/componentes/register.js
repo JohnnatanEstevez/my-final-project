@@ -4,33 +4,15 @@ import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
-import * as yup from "yup";
 import { Link } from "react-router-dom";
+import { schemaRegister } from "../schemas/schema";
 
 export default function Register() {
-  const schema = yup.object().shape({
-    name: yup.string().required("Name is required"),
-    lastname: yup.string().required("Last Name is required"),
-    email: yup.string().email().required(),
-    password: yup
-      .string()
-      .required("Password is required")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/,
-        "Must Contain min 6 Characters, One Uppercase, One Lowercase and One Number"
-      ),
-    confirmPassword: yup
-      .string()
-      .required()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("Confirm password is required"),
-  });
-
   const dispatch = useDispatch();
 
   return (
     <Formik
-      validationSchema={schema}
+      validationSchema={schemaRegister}
       onSubmit={({ confirmPassword, ...values }, { resetForm }) => {
         console.log(values);
         dispatch(thunkUserRegister(values));
