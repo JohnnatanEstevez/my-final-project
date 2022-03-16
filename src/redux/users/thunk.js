@@ -1,5 +1,11 @@
 import { postRegister } from "../../services/registerService";
-import { userRegisterSuccess, userRegisterError } from "./actionCreator";
+import { postLogin } from "../../services/loginService";
+import {
+  userRegisterSuccess,
+  userRegisterError,
+  userLoginSuccess,
+  userLoginError,
+} from "./actionCreator";
 export const thunkUserRegister = (values) => {
   return (dispatch) => {
     postRegister(values)
@@ -12,6 +18,14 @@ export const thunkUserRegister = (values) => {
   };
 };
 
-export const thunkUserLogin = () => {
-  return;
+export const thunkUserLogin = (values) => {
+  return (dispatch) => {
+    postLogin(values)
+      .then((data) => {
+        dispatch(userLoginSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(userLoginError(error));
+      });
+  };
 };
