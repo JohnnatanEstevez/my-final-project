@@ -29,7 +29,7 @@ export const thunkUserLogin = (values) => {
       })
       .catch((error) => {
         dispatch(userLoginError(error));
-        toast.error("Login Failed, incorrect email or password");
+        toast.error("Login Failed, Plesase validate your login information");
       });
   };
 };
