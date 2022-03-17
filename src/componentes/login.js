@@ -6,17 +6,17 @@ import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { loginSchema } from "../schemas/schema";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
   const dispatch = useDispatch();
-
   return (
     <Formik
       validationSchema={loginSchema}
-      onSubmit={(values, resetForm) => {
-        console.log(values);
+      onSubmit={(values, { resetForm }) => {
         dispatch(thunkUserLogin(values));
-        //resetForm();
+        resetForm();
       }}
       initialValues={{
         email: "",
@@ -44,13 +44,13 @@ export default function Login() {
                 name="email"
                 value={values.email}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 isInvalid={!!errors.email}
                 placeholder="example@example.com"
               />
               <Form.Control.Feedback type="invalid">
                 {errors.email}
               </Form.Control.Feedback>
-              {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
             </Form.Group>
             <Form.Group className="mb-3" controlId="password">
               <Form.Label>Password</Form.Label>
@@ -58,11 +58,11 @@ export default function Login() {
                 type="password"
                 name="password"
                 value={values.password}
+                onBlur={handleBlur}
                 onChange={handleChange}
                 isInvalid={!!errors.password}
                 placeholder="password"
               />
-              {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
 
               <Form.Control.Feedback type="invalid">
                 {errors.password}
@@ -82,6 +82,7 @@ export default function Login() {
               >
                 Login
               </Button>
+              <ToastContainer autoClose={2000} />
             </div>
             <div className="text-center">
               <Link to="/register">Already have an account?</Link>

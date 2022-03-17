@@ -1,5 +1,4 @@
 import * as TYPES from "./types";
-
 export const userRegisterStarted = () => ({
   type: TYPES.USER_REGISTER_STARTED,
 });

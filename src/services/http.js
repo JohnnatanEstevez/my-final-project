@@ -1,6 +1,4 @@
 export function http(url, method = "GET", data, headers = {}) {
-  console.log("http");
-  console.log(data);
   return fetch(url, {
     method,
     ...(data ? { body: JSON.stringify(data) } : null),

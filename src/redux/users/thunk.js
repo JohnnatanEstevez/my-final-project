@@ -6,6 +6,8 @@ import {
   userLoginSuccess,
   userLoginError,
 } from "./actionCreator";
+import { toast } from "react-toastify";
+
 export const thunkUserRegister = (values) => {
   return (dispatch) => {
     postRegister(values)
@@ -21,11 +23,13 @@ export const thunkUserRegister = (values) => {
 export const thunkUserLogin = (values) => {
   return (dispatch) => {
     postLogin(values)
-      .then((data) => {
-        dispatch(userLoginSuccess(data));
+      .then((res) => {
+        dispatch(userLoginSuccess(res));
+        toast.success("Login Success");
       })
       .catch((error) => {
         dispatch(userLoginError(error));
+        toast.error("Login Failed, incorrect email or password");
       });
   };
 };

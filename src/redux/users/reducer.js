@@ -33,9 +33,8 @@ export function registerReducer(state = initialSatate, action) {
     case TYPES.USER_LOGIN_ERROR:
       return {
         ...state,
-        user: [],
         hasError: true,
-        errorMessage: "verify information", //action.payload,
+        errorMessage: action.payload,
       };
 
     default:

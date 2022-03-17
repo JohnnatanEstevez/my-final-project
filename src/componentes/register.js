@@ -45,6 +45,7 @@ export default function Register() {
                 name="name"
                 value={values.name}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 isInvalid={!!errors.name}
                 placeholder="Name"
               />
@@ -60,6 +61,7 @@ export default function Register() {
                 name="lastname"
                 value={values.lastname}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 isInvalid={!!errors.lastname}
                 placeholder="Last name"
               />
@@ -75,6 +77,7 @@ export default function Register() {
                 name="email"
                 value={values.email}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 isInvalid={!!errors.email}
                 placeholder="example@example.com"
               />
