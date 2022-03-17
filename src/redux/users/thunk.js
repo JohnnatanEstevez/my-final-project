@@ -7,7 +7,6 @@ import {
   userLoginError,
 } from "./actionCreator";
 import { toast } from "react-toastify";
-
 export const thunkUserRegister = (values) => {
   return (dispatch) => {
     postRegister(values)
@@ -22,14 +21,18 @@ export const thunkUserRegister = (values) => {
 
 export const thunkUserLogin = (values) => {
   return (dispatch) => {
-    postLogin(values)
+    toast
+      .promise(postLogin(values), {
+        pending: "loading",
+        success: "👌 Login Success ",
+        error: "🤯 Login Failed, Plesase validate your login information",
+      })
+
       .then((res) => {
         dispatch(userLoginSuccess(res));
-        toast.success("Login Success");
       })
       .catch((error) => {
         dispatch(userLoginError(error));
-        toast.error("Login Failed, Plesase validate your login information");
       });
   };
 };

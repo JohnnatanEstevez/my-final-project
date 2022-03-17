@@ -82,7 +82,7 @@ export default function Login() {
               >
                 Login
               </Button>
-              <ToastContainer autoClose={2000} />
+              <ToastContainer autoClose={2000} position="top-center" />
             </div>
             <div className="text-center">
               <Link to="/register">Already have an account?</Link>
