@@ -22,6 +22,21 @@ export function registerReducer(state = initialSatate, action) {
         errorMessage: action.payload.errors,
       };
 
+    case TYPES.USER_LOGIN_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+        hasError: false,
+        errorMessage: "",
+      };
+
+    case TYPES.USER_LOGIN_ERROR:
+      return {
+        ...state,
+        hasError: true,
+        errorMessage: action.payload,
+      };
+
     default:
       return state;
   }

@@ -1,5 +1,12 @@
 import { postRegister } from "../../services/registerService";
-import { userRegisterSuccess, userRegisterError } from "./actionCreator";
+import { postLogin } from "../../services/loginService";
+import {
+  userRegisterSuccess,
+  userRegisterError,
+  userLoginSuccess,
+  userLoginError,
+} from "./actionCreator";
+import { toast } from "react-toastify";
 export const thunkUserRegister = (values) => {
   return (dispatch) => {
     postRegister(values)
@@ -12,6 +19,20 @@ export const thunkUserRegister = (values) => {
   };
 };
 
-export const thunkUserLogin = () => {
-  return;
+export const thunkUserLogin = (values) => {
+  return (dispatch) => {
+    toast
+      .promise(postLogin(values), {
+        pending: "loading",
+        success: "👌 Login Success ",
+        error: "🤯 Login Failed, Plesase validate your login information",
+      })
+
+      .then((res) => {
+        dispatch(userLoginSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(userLoginError(error));
+      });
+  };
 };
