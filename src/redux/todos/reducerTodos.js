@@ -1,25 +1,20 @@
 import * as TYPES from "./typesTodos";
 
 const initialState = {
-  todos: [],
-  hasError: false,
-  errorMessage: "",
+  list: [],
 };
 
 export function todosReducer(state = initialState, action) {
   switch (action.type) {
     case TYPES.ADD_TODOS_SUCCESS:
+      return { list: [...state.list, action.payload] };
+
+    case TYPES.LIST_TODOS_SUCCESS:
+      return { list: action.payload };
+
+    case TYPES.DELETE_TODO_SUCCESS:
       return {
-        ...state,
-        todos: [...state.todos, action.payload],
-        hasError: false,
-        errorMessage: "",
-      };
-    case TYPES.ADD_TODOS_ERROR:
-      return {
-        ...state,
-        hasError: true,
-        errorMessage: action.payload.errors,
+        list: state.list.filter((todo) => todo.id !== action.payload.id),
       };
     default:
       return state;

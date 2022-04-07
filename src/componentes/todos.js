@@ -5,15 +5,21 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { TodosTable } from "./todosTable";
 import { useDispatch } from "react-redux";
-import { thunkAddTodo } from "../redux/todos/thunkTodos";
+import { thunkAddTodo, thunkListTodo } from "../redux/todos/thunkTodos";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { todosSelector } from "../redux/todos/selectorTodos";
+
 const todosSchema = yup.object().shape({
   description: yup.string().required("Name is required"),
 });
 
 export default function Todos() {
+  const todos = useSelector(todosSelector);
   const dispatch = useDispatch();
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(thunkListTodo());
+  }, []);
   return (
     <Formik
       validationSchema={todosSchema}
@@ -54,7 +60,8 @@ export default function Todos() {
               </Button>
             </InputGroup>
           </Form>
-          <TodosTable />
+
+          <TodosTable todos={todos} />
         </div>
       )}
     </Formik>

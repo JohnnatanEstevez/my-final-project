@@ -11,6 +11,9 @@ export function http(url, method = "GET", data, headers = {}) {
 }
 
 function handleResponse(res) {
+  if (res.ok && res.status === 204) {
+    return;
+  }
   return res
     .json()
     .then((result) => (res.ok ? result : Promise.reject(result)));

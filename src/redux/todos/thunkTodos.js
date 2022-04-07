@@ -1,7 +1,9 @@
-import { addTodo } from "../../services/crudTodosService";
+import { addTodo, getTodo, deleteTodo } from "../../services/crudTodosService";
 import {
   addTodoActionCreatorSuccess,
   addTodoActionCreatorError,
+  listTodoActionCreatorSuccess,
+  deleteTodoActionCreatorSuccess,
 } from "./actionCreatorsTodos";
 
 export const thunkAddTodo = (todo) => {
@@ -12,6 +14,27 @@ export const thunkAddTodo = (todo) => {
       })
       .catch((error) => {
         dispatch(addTodoActionCreatorError(error));
+      });
+  };
+};
+
+export const thunkListTodo = () => {
+  return (dispatch) => {
+    return getTodo().then((res) => {
+      dispatch(listTodoActionCreatorSuccess(res));
+    });
+  };
+};
+
+export const thunkDeleteTodo = (todo) => {
+  return (dispatch) => {
+    deleteTodo(todo.id)
+      .then(() => {
+        dispatch(deleteTodoActionCreatorSuccess(todo));
+      })
+
+      .catch((error) => {
+        console.log(error);
       });
   };
 };
