@@ -1,9 +1,15 @@
-import { addTodo, getTodo, deleteTodo } from "../../services/crudTodosService";
+import {
+  addTodo,
+  getTodo,
+  deleteTodo,
+  updateTodo,
+} from "../../services/crudTodosService";
 import {
   addTodoActionCreatorSuccess,
   addTodoActionCreatorError,
   listTodoActionCreatorSuccess,
   deleteTodoActionCreatorSuccess,
+  updateTodoActionCreatorsSuccess,
 } from "./actionCreatorsTodos";
 
 export const thunkAddTodo = (todo) => {
@@ -36,5 +42,15 @@ export const thunkDeleteTodo = (todo) => {
       .catch((error) => {
         console.log(error);
       });
+  };
+};
+
+export const thunkUpdateTodo = (editRow) => {
+  console.log(editRow);
+
+  return (dispatch) => {
+    updateTodo(editRow).then((res) => {
+      dispatch(updateTodoActionCreatorsSuccess(res));
+    });
   };
 };

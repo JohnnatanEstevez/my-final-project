@@ -24,3 +24,8 @@ export const deleteTodoActionCreatorSuccess = (todo) => ({
   type: TYPES.DELETE_TODO_SUCCESS,
   payload: todo,
 });
+
+export const updateTodoActionCreatorsSuccess = ({ data }) => ({
+  type: TYPES.UPDATE_TODO_SUCCESS,
+  payload: data,
+});

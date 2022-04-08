@@ -16,6 +16,15 @@ export function todosReducer(state = initialState, action) {
       return {
         list: state.list.filter((todo) => todo.id !== action.payload.id),
       };
+    case TYPES.UPDATE_TODO_SUCCESS:
+      return {
+        list: state.list.map((todo) => {
+          if (todo.id === action.payload.id) {
+            return action.payload;
+          }
+          return todo;
+        }),
+      };
     default:
       return state;
   }
