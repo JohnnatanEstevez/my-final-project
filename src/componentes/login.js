@@ -8,15 +8,20 @@ import { Link } from "react-router-dom";
 import { loginSchema } from "../schemas/schema";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router";
 export default function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <Formik
       validationSchema={loginSchema}
       onSubmit={(values, { resetForm }) => {
-        dispatch(thunkUserLogin(values));
-        resetForm();
+        dispatch(thunkUserLogin(values)).then(() => {
+          navigate(`/todos`);
+        });
+        /* .catch(() => {
+            resetForm();
+          }) */
       }}
       initialValues={{
         email: "",
@@ -78,7 +83,7 @@ export default function Login() {
                 variant="primary"
                 type="submit"
                 size="lg"
-                disabled={isSubmitting}
+                //disabled={isSubmitting}
               >
                 Login
               </Button>
