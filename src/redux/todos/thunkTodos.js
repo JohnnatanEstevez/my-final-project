@@ -6,7 +6,6 @@ import {
 } from "../../services/crudTodosService";
 import {
   addTodoActionCreatorSuccess,
-  addTodoActionCreatorError,
   listTodoActionCreatorSuccess,
   deleteTodoActionCreatorSuccess,
   updateTodoActionCreatorsSuccess,
@@ -14,13 +13,9 @@ import {
 
 export const thunkAddTodo = (todo) => {
   return (dispatch) => {
-    addTodo(todo)
-      .then((res) => {
-        dispatch(addTodoActionCreatorSuccess(res));
-      })
-      .catch((error) => {
-        dispatch(addTodoActionCreatorError(error));
-      });
+    addTodo(todo).then((res) => {
+      dispatch(addTodoActionCreatorSuccess(res));
+    });
   };
 };
 
@@ -34,20 +29,13 @@ export const thunkListTodo = () => {
 
 export const thunkDeleteTodo = (todo) => {
   return (dispatch) => {
-    deleteTodo(todo.id)
-      .then(() => {
-        dispatch(deleteTodoActionCreatorSuccess(todo));
-      })
-
-      .catch((error) => {
-        console.log(error);
-      });
+    deleteTodo(todo.id).then(() => {
+      dispatch(deleteTodoActionCreatorSuccess(todo));
+    });
   };
 };
 
 export const thunkUpdateTodo = (editRow) => {
-  console.log(editRow);
-
   return (dispatch) => {
     updateTodo(editRow).then((res) => {
       dispatch(updateTodoActionCreatorsSuccess(res));

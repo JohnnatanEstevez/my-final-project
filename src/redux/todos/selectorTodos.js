@@ -1,1 +1,1 @@
-export const todosSelector = ({ todos }) => todos.list;
+export const todosSelector = ({ todos }) => todos;

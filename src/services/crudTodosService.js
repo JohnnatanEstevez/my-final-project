@@ -13,7 +13,6 @@ export function deleteTodo(id) {
   return http(`${url}/todos/${id}`, "DELETE");
 }
 export function updateTodo(todo) {
-  console.log(todo);
   return http(`${url}/todos/${todo.id}`, "PUT", {
     todo: { description: todo.description },
   });

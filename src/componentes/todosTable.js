@@ -35,13 +35,7 @@ export function TodosTable({ todos }) {
           todo.id === editRow?.id ? (
             <tr key={todo.id}>
               <td>
-                <input
-                  type="text"
-                  name="id"
-                  value={editRow.id}
-                  disabled
-                  //onChange={handleChange}
-                />
+                <input type="text" name="id" value={editRow.id} disabled />
               </td>
               <td>
                 <input
